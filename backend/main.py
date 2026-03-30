@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+import os
 from backend.database.init_db import init_db
 from backend.routes import auth, complaint, dashboard
 from backend.services import celery_tasks  # noqa: F401
@@ -18,9 +18,11 @@ from backend.services.rag import warmup_generator
 app = FastAPI(title="Grievance AI System")
 configure_logging()
 
+origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
