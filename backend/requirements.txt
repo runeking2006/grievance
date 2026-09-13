@@ -70,3 +70,4 @@ urllib3
 uvicorn
 vine
 wcwidth
+
